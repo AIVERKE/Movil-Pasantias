@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_dashboard" android:icon="@android:drawable/ic_menu_view" android:title="@string/nav_dashboard" />
+    <item android:id="@+id/nav_inscripciones" android:icon="@android:drawable/ic_menu_edit" android:title="@string/nav_inscripciones" />
+    <item android:id="@+id/nav_pasantes" android:icon="@android:drawable/ic_menu_my_calendar" android:title="@string/nav_pasantes" />
+    <item android:id="@+id/nav_actividades" android:icon="@android:drawable/ic_menu_sort_by_size" android:title="@string/nav_actividades" />
+    <item android:id="@+id/nav_notificaciones" android:icon="@android:drawable/ic_popup_reminder" android:title="@string/nav_notificaciones" />
+</menu>

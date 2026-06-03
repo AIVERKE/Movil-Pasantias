@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pasantías</string>
+    <string name="login_title">Iniciar sesión</string>
+    <string name="email_hint">Correo electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="login_button">Ingresar</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="loading">Cargando…</string>
+    <string name="error_generic">Ocurrió un error. Intentá de nuevo.</string>
+    <string name="error_network">No se pudo conectar con el servidor.</string>
+    <string name="error_credentials">Correo o contraseña incorrectos.</string>
+    <string name="empty_list">No hay datos para mostrar</string>
+    <string name="notifications_channel">Notificaciones Pasantías</string>
+    <string name="notifications_channel_desc">Alertas de inscripciones, actividades y mensajes</string>
+
+    <string name="nav_dashboard">Inicio</string>
+    <string name="nav_pasantias">Pasantías</string>
+    <string name="nav_empresa">Empresa</string>
+    <string name="nav_notificaciones">Alertas</string>
+    <string name="nav_inscripciones">Inscripciones</string>
+    <string name="nav_pasantes">Pasantes</string>
+    <string name="nav_actividades">Actividades</string>
+    <string name="nav_catalogo">Catálogo</string>
+    <string name="nav_mis_actividades">Mis tareas</string>
+    <string name="nav_calendario">Calendario</string>
+
+    <string name="save">Guardar</string>
+    <string name="create">Crear</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
+    <string name="postular">Postularme</string>
+</resources>
