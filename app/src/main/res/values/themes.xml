@@ -12,9 +12,51 @@
     </style>
 
     <style name="Widget.Pasantias.Button" parent="Widget.Material3.Button">
-        <item name="backgroundTint">@color/primary</item>
+        <item name="backgroundTint">@color/black</item>
         <item name="android:textColor">@color/white</item>
-        <item name="cornerRadius">8dp</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="Widget.Pasantias.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/neutral</item>
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="hintTextColor">@color/text_muted</item>
+        <item name="startIconTint">@color/text_muted</item>
+        <item name="endIconTint">@color/text_muted</item>
+    </style>
+
+    <style name="Widget.Pasantias.FormTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxStrokeColor">@color/border_light</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/text_muted</item>
+        <item name="startIconTint">@color/text_muted</item>
+        <item name="endIconTint">@color/text_muted</item>
+    </style>
+
+    <style name="Widget.Pasantias.FormTextInputLayoutDropdown" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/white</item>
+        <item name="boxStrokeColor">@color/border_light</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/text_muted</item>
+        <item name="endIconTint">@color/text_muted</item>
     </style>
 
     <style name="Widget.Pasantias.Toolbar" parent="Widget.Material3.Toolbar">

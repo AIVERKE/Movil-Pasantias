@@ -2,9 +2,13 @@
 <resources>
     <string name="app_name">Pasantías</string>
     <string name="login_title">Iniciar sesión</string>
+    <string name="login_heading">Iniciar Sesión</string>
+    <string name="login_subtitle">Accedé a tu cuenta de Pasantías UMSA</string>
     <string name="email_hint">Correo electrónico</string>
     <string name="password_hint">Contraseña</string>
-    <string name="login_button">Ingresar</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="no_account">¿No tenés una cuenta?</string>
     <string name="logout">Cerrar sesión</string>
     <string name="loading">Cargando…</string>
     <string name="error_generic">Ocurrió un error. Intentá de nuevo.</string>
@@ -30,4 +34,24 @@
     <string name="delete">Eliminar</string>
     <string name="edit">Editar</string>
     <string name="postular">Postularme</string>
+    <string name="hint_modalidad">Modalidad</string>
+    <string name="hint_cupos">Cupos</string>
+    <string name="hint_horario">Horario laboral</string>
+    <string name="hint_requisitos">Requisitos</string>
+    <string name="hint_requisitos_placeholder">Un requisito por línea</string>
+    <string name="hint_area">Área</string>
+    <string name="hint_fecha_inicio">Fecha de Inicio</string>
+    <string name="hint_fecha_fin">Fecha de Fin</string>
+    <string name="action_publicar">Publicar</string>
+    <string name="action_pausar">Pausar</string>
+    <string name="action_finalizar">Finalizar</string>
+    <string name="action_archivar">Archivar</string>
+    <string name="action_restaurar">Restaurar</string>
+    <string name="dialog_confirm_title">Confirmá esta acción</string>
+    <string name="dialog_delete_msg">¿Eliminar esta pasantía? Esta acción no se puede deshacer.</string>
+    <string name="cancel">Cancelar</string>
+    <string name="estado_pendiente">Pendiente</string>
+    <string name="estado_en_curso">En Curso</string>
+    <string name="estado_finalizada">Finalizada</string>
+    <string name="estado_archivada">Archivada</string>
 </resources>

@@ -1,34 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:background="@color/neutral">
 
-    <LinearLayout
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        style="@style/Widget.Pasantias.Toolbar"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="Nueva Convocatoria" />
 
-        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Título">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/inputTitulo" android:layout_width="match_parent" android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Descripción">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/inputDescripcion" android:layout_width="match_parent" android:layout_height="wrap_content" android:minLines="4" android:gravity="top" />
-        </com.google.android.material.textfield.TextInputLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Fecha inicio (YYYY-MM-DD)">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/inputFechaInicio" android:layout_width="match_parent" android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <!-- Título del Puesto -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Título del Puesto"
+                app:placeholderText="Ej: Desarrollador Frontend Trainee"
+                style="@style/Widget.Pasantias.FormTextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textCapSentences"
+                    android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Fecha fin (YYYY-MM-DD)">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/inputFechaFin" android:layout_width="match_parent" android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <!-- Modalidad (Dropdown) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_modalidad"
+                style="@style/Widget.Pasantias.FormTextInputLayoutDropdown">
+                <AutoCompleteTextView
+                    android:id="@+id/spinnerModalidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Área">
-            <com.google.android.material.textfield.TextInputEditText android:id="@+id/inputArea" android:layout_width="match_parent" android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <!-- Cupos -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_cupos"
+                app:placeholderText="Ej: 3"
+                style="@style/Widget.Pasantias.FormTextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputCupos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton android:id="@+id/btnGuardar" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="@string/save" />
-    </LinearLayout>
-</ScrollView>
+            <!-- Horario laboral -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_horario"
+                app:placeholderText="Ej: Lunes a Viernes 08:00 - 16:00"
+                style="@style/Widget.Pasantias.FormTextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputHorario"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Descripción del Puesto -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Descripción del Puesto"
+                app:placeholderText="Describe las responsabilidades generales del puesto..."
+                style="@style/Widget.Pasantias.FormTextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDescripcion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minLines="3"
+                    android:gravity="top|start" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Requisitos del Puesto -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_requisitos"
+                app:placeholderText="Ej: Estudiante de último semestre"
+                style="@style/Widget.Pasantias.FormTextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputRequisitos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:minLines="3"
+                    android:gravity="top|start" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                android:text="@string/hint_requisitos_placeholder"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+
+            <!-- Fecha de Inicio -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutFechaInicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_fecha_inicio"
+                app:placeholderText="YYYY-MM-DD"
+                style="@style/Widget.Pasantias.FormTextInputLayout"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_calendar"
+                app:endIconContentDescription="Seleccionar fecha">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputFechaInicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:clickable="true"
+                    android:cursorVisible="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Fecha de Fin -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutFechaFin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_fecha_fin"
+                app:placeholderText="YYYY-MM-DD"
+                style="@style/Widget.Pasantias.FormTextInputLayout"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/ic_calendar"
+                app:endIconContentDescription="Seleccionar fecha">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputFechaFin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:clickable="true"
+                    android:cursorVisible="false" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Área -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="@string/hint_area"
+                app:placeholderText="Ej: Tecnología, Marketing..."
+                style="@style/Widget.Pasantias.FormTextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text|textCapWords"
+                    android:imeOptions="actionDone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Botón Guardar -->
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/save"
+                android:background="@drawable/selector_button_black"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

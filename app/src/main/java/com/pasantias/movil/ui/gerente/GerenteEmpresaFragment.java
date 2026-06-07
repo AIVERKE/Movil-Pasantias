@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -14,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.pasantias.movil.R;
 import com.pasantias.movil.data.api.ApiClient;
@@ -37,6 +39,8 @@ import retrofit2.Response;
 public class GerenteEmpresaFragment extends Fragment {
 
     private TextInputEditText inputNombre, inputRubro, inputDireccion, inputTelefono, inputEmail, inputDescripcion;
+    private TextView tvPreviewNombre, tvPreviewRubro, tvPreviewTelefono, tvPreviewDireccion, tvLogoPlaceholder;
+    private ImageView imgLogo;
     private ProgressBar progress;
     private ActivityResultLauncher<String> pickImage;
 
@@ -65,11 +69,21 @@ public class GerenteEmpresaFragment extends Fragment {
         inputTelefono = view.findViewById(R.id.inputTelefono);
         inputEmail = view.findViewById(R.id.inputEmail);
         inputDescripcion = view.findViewById(R.id.inputDescripcion);
+        
+        tvPreviewNombre = view.findViewById(R.id.tvPreviewNombre);
+        tvPreviewRubro = view.findViewById(R.id.tvPreviewRubro);
+        tvPreviewTelefono = view.findViewById(R.id.tvPreviewTelefono);
+        tvPreviewDireccion = view.findViewById(R.id.tvPreviewDireccion);
+        tvLogoPlaceholder = view.findViewById(R.id.tvLogoPlaceholder);
+        imgLogo = view.findViewById(R.id.imgLogo);
+        
         progress = view.findViewById(R.id.progress);
-        MaterialButton btnGuardar = view.findViewById(R.id.btnGuardar);
-        MaterialButton btnLogo = view.findViewById(R.id.btnLogo);
+        Button btnGuardar = view.findViewById(R.id.btnGuardar);
+        TextView btnSubirLogo = view.findViewById(R.id.btnSubirLogo);
+        
         btnGuardar.setOnClickListener(v -> guardar());
-        btnLogo.setOnClickListener(v -> pickImage.launch("image/*"));
+        btnSubirLogo.setOnClickListener(v -> pickImage.launch("image/*"));
+        
         cargar();
     }
 
@@ -79,18 +93,90 @@ public class GerenteEmpresaFragment extends Fragment {
             @Override
             public void onSuccess(EmpresaDto e) {
                 progress.setVisibility(View.GONE);
-                inputNombre.setText(e.nombre);
-                inputRubro.setText(e.rubro);
-                inputDireccion.setText(e.direccion);
-                inputTelefono.setText(e.telefono);
-                inputEmail.setText(e.email_contacto);
-                inputDescripcion.setText(e.descripcion);
+                if (e != null) {
+                    bindEmpresa(e);
+                }
             }
 
             @Override
             public void onError(String message) {
                 progress.setVisibility(View.GONE);
                 UiUtils.toast(requireActivity(), message);
+            }
+        });
+    }
+
+    private void bindEmpresa(EmpresaDto e) {
+        inputNombre.setText(e.nombre);
+        inputRubro.setText(e.rubro);
+        inputDireccion.setText(e.direccion);
+        inputTelefono.setText(e.telefono);
+        inputEmail.setText(e.email_contacto);
+        inputDescripcion.setText(e.descripcion);
+
+        // Previsualización
+        tvPreviewNombre.setText(e.nombre != null && !e.nombre.isEmpty() ? e.nombre : "Nombre de Empresa");
+        tvPreviewRubro.setText(e.rubro != null && !e.rubro.isEmpty() ? e.rubro : "Rubro no especificado");
+        tvPreviewTelefono.setText(e.telefono != null && !e.telefono.isEmpty() ? e.telefono : "Sin registrar");
+        tvPreviewDireccion.setText(e.direccion != null && !e.direccion.isEmpty() ? e.direccion : "Sin registrar");
+
+        // Cargar logo
+        if (e.url_logo != null && !e.url_logo.isEmpty()) {
+            String url = ApiClient.mediaUrl(e.url_logo);
+            descargarCargarImagen(url, imgLogo);
+        } else {
+            imgLogo.setVisibility(View.GONE);
+            tvLogoPlaceholder.setVisibility(View.VISIBLE);
+            String inicial = "E";
+            if (e.nombre != null && !e.nombre.isEmpty()) {
+                inicial = e.nombre.substring(0, 1).toUpperCase();
+            }
+            tvLogoPlaceholder.setText(inicial);
+        }
+    }
+
+    private void descargarCargarImagen(String url, ImageView imageView) {
+        okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+        okhttp3.Request request = new okhttp3.Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new okhttp3.Callback() {
+            @Override
+            public void onFailure(@NonNull okhttp3.Call call, @NonNull java.io.IOException e) {
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        imageView.setVisibility(View.GONE);
+                        tvLogoPlaceholder.setVisibility(View.VISIBLE);
+                    });
+                }
+            }
+
+            @Override
+            public void onResponse(@NonNull okhttp3.Call call, @NonNull okhttp3.Response response) throws java.io.IOException {
+                if (response.isSuccessful() && response.body() != null) {
+                    byte[] bytes = response.body().bytes();
+                    android.graphics.Bitmap bitmap = android.graphics.BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            if (bitmap != null) {
+                                imageView.setImageBitmap(bitmap);
+                                imageView.setVisibility(View.VISIBLE);
+                                tvLogoPlaceholder.setVisibility(View.GONE);
+                            } else {
+                                imageView.setVisibility(View.GONE);
+                                tvLogoPlaceholder.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                } else {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
+                            imageView.setVisibility(View.GONE);
+                            tvLogoPlaceholder.setVisibility(View.VISIBLE);
+                        });
+                    }
+                }
             }
         });
     }
@@ -109,6 +195,9 @@ public class GerenteEmpresaFragment extends Fragment {
             public void onSuccess(EmpresaDto data) {
                 progress.setVisibility(View.GONE);
                 UiUtils.toast(requireActivity(), "Empresa actualizada");
+                if (data != null) {
+                    bindEmpresa(data);
+                }
             }
 
             @Override
@@ -136,7 +225,12 @@ public class GerenteEmpresaFragment extends Fragment {
                 @Override
                 public void onResponse(@NonNull Call<EmpresaDto> call, @NonNull Response<EmpresaDto> response) {
                     progress.setVisibility(View.GONE);
-                    UiUtils.toast(requireActivity(), response.isSuccessful() ? "Logo actualizado" : "Error al subir logo");
+                    if (response.isSuccessful() && response.body() != null) {
+                        UiUtils.toast(requireActivity(), "Logo actualizado");
+                        bindEmpresa(response.body());
+                    } else {
+                        UiUtils.toast(requireActivity(), "Error al subir logo");
+                    }
                 }
 
                 @Override

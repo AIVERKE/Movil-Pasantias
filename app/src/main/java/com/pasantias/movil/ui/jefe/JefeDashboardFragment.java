@@ -1,5 +1,6 @@
 package com.pasantias.movil.ui.jefe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.pasantias.movil.R;
 import com.pasantias.movil.data.api.ApiClient;
 import com.pasantias.movil.data.dto.JefeDashboardDto;
+import com.pasantias.movil.ui.common.BaseMainActivity;
 
 public class JefeDashboardFragment extends Fragment {
 
@@ -29,10 +31,34 @@ public class JefeDashboardFragment extends Fragment {
         SwipeRefreshLayout swipe = view.findViewById(R.id.swipeRefresh);
         ProgressBar progress = view.findViewById(R.id.progress);
         TextView textError = view.findViewById(R.id.textError);
-        bindStat(view.findViewById(R.id.stat1), "Pasantes activos", "0", R.color.success);
-        bindStat(view.findViewById(R.id.stat2), "Inscripciones pendientes", "0", R.color.tertiary);
-        bindStat(view.findViewById(R.id.stat3), "Informes por emitir", "0", R.color.primary);
-        bindStat(view.findViewById(R.id.stat4), "Alertas", "0", R.color.secondary);
+        
+        View stat1 = view.findViewById(R.id.stat1);
+        View stat2 = view.findViewById(R.id.stat2);
+        View stat3 = view.findViewById(R.id.stat3);
+        View stat4 = view.findViewById(R.id.stat4);
+
+        bindStat(stat1, "Pasantes activos", "0", R.color.success);
+        bindStat(stat2, "Inscripciones pendientes", "0", R.color.tertiary);
+        bindStat(stat3, "Informes por emitir", "0", R.color.primary);
+        bindStat(stat4, "Alertas", "0", R.color.secondary);
+
+        stat1.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), JefeBitacorasActivity.class));
+        });
+        stat2.setOnClickListener(v -> {
+            if (getActivity() instanceof BaseMainActivity) {
+                ((BaseMainActivity) getActivity()).selectBottomNavItem(R.id.nav_inscripciones);
+            }
+        });
+        stat3.setOnClickListener(v -> {
+            startActivity(new Intent(requireContext(), JefeInformesActivity.class));
+        });
+        stat4.setOnClickListener(v -> {
+            if (getActivity() instanceof BaseMainActivity) {
+                ((BaseMainActivity) getActivity()).selectBottomNavItem(R.id.nav_inscripciones);
+            }
+        });
+
         swipe.setOnRefreshListener(() -> load(view, swipe, progress, textError));
         load(view, swipe, progress, textError);
     }

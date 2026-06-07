@@ -22,8 +22,15 @@ public class PasantiasApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        TokenManager.init(this);
+        // ApiClient no bloquea — se inicializa en el hilo principal
         ApiClient.init(this);
+        // TokenManager usa EncryptedSharedPreferences que inicializa el Keystore
+        // de Android en el primer arranque. Hacerlo en el hilo principal congela
+        // la app varios segundos. Lo movemos a un hilo de fondo.
+        new Thread(() -> {
+            TokenManager.init(this);
+        }, "token-init").start();
+
         createNotificationChannel();
         scheduleNotificationSync();
     }

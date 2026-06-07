@@ -19,21 +19,30 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".ui.auth.LoginActivity"
+            android:name=".ui.auth.SplashActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustResize">
+            android:theme="@style/Theme.Pasantias">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <activity android:name=".ui.gerente.GerenteMainActivity" />
         <activity android:name=".ui.jefe.JefeMainActivity" />
         <activity android:name=".ui.estudiante.EstudianteMainActivity" />
         <activity
             android:name=".ui.gerente.PasantiaFormActivity"
-            android:theme="@style/Theme.Pasantias.ActionBar" />
+            android:theme="@style/Theme.Pasantias"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.gerente.PasantiaActividadesActivity"
+            android:theme="@style/Theme.Pasantias"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.estudiante.PasantiaDetalleActivity"
             android:theme="@style/Theme.Pasantias.ActionBar" />
@@ -43,6 +52,16 @@
         <activity
             android:name=".ui.jefe.ActividadComentariosActivity"
             android:theme="@style/Theme.Pasantias.ActionBar" />
+
+        <activity android:name=".ui.jefe.InscripcionDetalleJefeActivity" />
+        <activity android:name=".ui.jefe.InvitarEstudianteActivity" />
+        <activity android:name=".ui.jefe.PasanteDetalleJefeActivity" />
+        <activity android:name=".ui.jefe.JefeActividadDetalleActivity" />
+        <activity android:name=".ui.jefe.CrearTareaActivity" />
+        <activity android:name=".ui.jefe.JefeBitacorasActivity" />
+        <activity android:name=".ui.jefe.JefeCalificarBitacoraActivity" />
+        <activity android:name=".ui.jefe.JefeInformesActivity" />
+        <activity android:name=".ui.jefe.JefeEmitirInformeActivity" />
 
     </application>
 </manifest>

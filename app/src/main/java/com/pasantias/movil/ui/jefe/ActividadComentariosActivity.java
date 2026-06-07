@@ -24,8 +24,10 @@ public class ActividadComentariosActivity extends AppCompatActivity {
 
     public static final String EXTRA_ACTIVIDAD_ID = "id_actividad";
     public static final String EXTRA_TITULO = "titulo";
+    public static final String EXTRA_TIPO = "tipo_actividad"; // "actividad" o "tarea"
 
     private int actividadId;
+    private String tipoActividad;
     private CardRowAdapter adapter;
     private EditText inputMensaje;
 
@@ -34,6 +36,9 @@ public class ActividadComentariosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comentarios);
         actividadId = getIntent().getIntExtra(EXTRA_ACTIVIDAD_ID, -1);
+        tipoActividad = getIntent().getStringExtra(EXTRA_TIPO);
+        if (tipoActividad == null) tipoActividad = "tarea";
+
         setTitle(getIntent().getStringExtra(EXTRA_TITULO));
         if (getSupportActionBar() != null) getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -48,49 +53,68 @@ public class ActividadComentariosActivity extends AppCompatActivity {
     }
 
     private void cargar() {
-        ApiClient.enqueue(ApiClient.get().api().listComentariosActividad(actividadId),
-                new ApiClient.ApiCallback<List<ComentarioDto>>() {
-                    @Override
-                    public void onSuccess(List<ComentarioDto> data) {
-                        List<CardRowAdapter.Row> rows = new ArrayList<>();
-                        if (data != null) {
-                            for (ComentarioDto c : data) {
-                                rows.add(new CardRowAdapter.Row(
-                                        c.autor + " (" + c.rol + ")",
-                                        c.texto,
-                                        c.fecha,
-                                        R.color.primary
-                                ));
-                            }
-                        }
-                        adapter.setItems(rows);
-                    }
+        retrofit2.Call<List<ComentarioDto>> call;
+        if ("actividad".equalsIgnoreCase(tipoActividad)) {
+            call = ApiClient.get().api().listComentariosActividadPasantia(actividadId);
+        } else {
+            call = ApiClient.get().api().listComentariosActividad(actividadId);
+        }
 
-                    @Override
-                    public void onError(String message) {
-                        Toast.makeText(ActividadComentariosActivity.this, message, Toast.LENGTH_SHORT).show();
+        ApiClient.enqueue(call, new ApiClient.ApiCallback<List<ComentarioDto>>() {
+            @Override
+            public void onSuccess(List<ComentarioDto> data) {
+                List<CardRowAdapter.Row> rows = new ArrayList<>();
+                if (data != null) {
+                    for (ComentarioDto c : data) {
+                        rows.add(new CardRowAdapter.Row(
+                                c.autor + " (" + c.rol + ")",
+                                c.texto,
+                                c.fecha,
+                                R.color.primary
+                        ));
                     }
-                });
+                }
+                adapter.setItems(rows);
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(ActividadComentariosActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void enviar() {
         String texto = inputMensaje.getText().toString().trim();
         if (texto.isEmpty()) return;
-        String autor = TokenManager.get().getUser().getNombreCompleto();
-        ComentarioRequest req = new ComentarioRequest(texto, "Jefe", autor);
-        ApiClient.enqueue(ApiClient.get().api().crearComentarioActividad(actividadId, req),
-                new ApiClient.ApiCallback<ComentarioDto>() {
-                    @Override
-                    public void onSuccess(ComentarioDto data) {
-                        inputMensaje.setText("");
-                        cargar();
-                    }
 
-                    @Override
-                    public void onError(String message) {
-                        Toast.makeText(ActividadComentariosActivity.this, message, Toast.LENGTH_SHORT).show();
-                    }
-                });
+        String autor = TokenManager.get().getUser().getNombreCompleto();
+        String tipoUsuario = TokenManager.get().getUser().tipo;
+        String rol = "Estudiante";
+        if (tipoUsuario != null && (tipoUsuario.toLowerCase().contains("jefe") || tipoUsuario.toLowerCase().contains("gerente"))) {
+            rol = "Jefe";
+        }
+
+        ComentarioRequest req = new ComentarioRequest(texto, rol, autor);
+        retrofit2.Call<ComentarioDto> call;
+        if ("actividad".equalsIgnoreCase(tipoActividad)) {
+            call = ApiClient.get().api().crearComentarioActividadPasantia(actividadId, req);
+        } else {
+            call = ApiClient.get().api().crearComentarioActividad(actividadId, req);
+        }
+
+        ApiClient.enqueue(call, new ApiClient.ApiCallback<ComentarioDto>() {
+            @Override
+            public void onSuccess(ComentarioDto data) {
+                inputMensaje.setText("");
+                cargar();
+            }
+
+            @Override
+            public void onError(String message) {
+                Toast.makeText(ActividadComentariosActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

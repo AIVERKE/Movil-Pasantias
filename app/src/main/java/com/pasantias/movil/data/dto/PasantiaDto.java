@@ -14,9 +14,14 @@ public class PasantiaDto {
     public String horario_laboral;
     public Integer cupos_totales;
     public Integer cupos_disponibles;
+    public Integer cupos_ocupados;
     public List<String> requisitos;
     public String empresa_nombre;
+    public EmpresaDto empresa;
     public String jefe_nombre;
     public Integer inscritos;
     public Integer postulantes;
+    public List<JefeDto> jefe_pasantes;
+    public List<ActividadDto> actividades;
+    public List<ComentarioDto> comentarios;
 }

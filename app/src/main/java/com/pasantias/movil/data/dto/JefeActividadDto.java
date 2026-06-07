@@ -13,6 +13,15 @@ public class JefeActividadDto {
         public String titulo;
     }
 
+    public java.util.List<PasanteRef> asignados;
+    public java.util.List<PasanteRef> pasantesDisponibles;
+
+    public static class PasanteRef {
+        public int id_inscripcion;
+        public String estudiante;
+        public String iniciales;
+    }
+
     public String getTitulo() {
         if (descripcion == null) return "Actividad";
         return descripcion.length() > 60 ? descripcion.substring(0, 57) + "…" : descripcion;

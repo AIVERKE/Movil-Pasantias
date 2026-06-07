@@ -9,5 +9,11 @@
     <color name="success">#10B981</color>
     <color name="danger">#EF4444</color>
     <color name="text_muted">#6B7280</color>
+    <color name="black">#000000</color>
     <color name="border_light">#E5E7EB</color>
+    <color name="estado_pendiente">#3B82F6</color>
+    <color name="estado_en_curso">#10B981</color>
+    <color name="estado_finalizada">#8B5CF6</color>
+    <color name="estado_cancelada">#9CA3AF</color>
+    <color name="warning">#F59E0B</color>
 </resources>

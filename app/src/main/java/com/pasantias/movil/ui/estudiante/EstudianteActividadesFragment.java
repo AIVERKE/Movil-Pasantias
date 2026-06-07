@@ -39,13 +39,14 @@ public class EstudianteActividadesFragment extends ListRefreshFragment {
                 adapter.setItems(rows);
                 adapter.setOnRowClick(pos -> {
                     EstudianteActividadItemDto a = actividades.get(pos);
-                    if (a.id_actividad == null) return;
+                    if (a.getIdForDetalle() == 0) return;
                     Intent i = new Intent(requireContext(), ActividadDetalleActivity.class);
-                    i.putExtra(ActividadDetalleActivity.EXTRA_ID, a.id_actividad);
+                    i.putExtra(ActividadDetalleActivity.EXTRA_ID, a.getIdForDetalle());
                     i.putExtra(ActividadDetalleActivity.EXTRA_TITULO, a.getTitulo());
                     i.putExtra(ActividadDetalleActivity.EXTRA_ESTADO, a.getEstado());
                     i.putExtra(ActividadDetalleActivity.EXTRA_DESCRIPCION, a.descripcion_actividad);
                     i.putExtra(ActividadDetalleActivity.EXTRA_FECHA, a.getFechaLimite());
+                    i.putExtra(ActividadDetalleActivity.EXTRA_TIPO, a.tipo != null ? a.tipo : "actividad");
                     startActivity(i);
                 });
                 showContent(!rows.isEmpty());

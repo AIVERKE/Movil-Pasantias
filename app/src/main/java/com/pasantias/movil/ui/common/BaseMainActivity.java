@@ -87,4 +87,10 @@ public abstract class BaseMainActivity extends AppCompatActivity {
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
+
+    public void selectBottomNavItem(int itemId) {
+        if (bottomNav != null) {
+            bottomNav.setSelectedItemId(itemId);
+        }
+    }
 }

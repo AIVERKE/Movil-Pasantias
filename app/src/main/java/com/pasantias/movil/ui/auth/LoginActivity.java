@@ -3,12 +3,13 @@ package com.pasantias.movil.ui.auth;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.pasantias.movil.R;
 import com.pasantias.movil.data.api.ApiClient;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText inputEmail;
     private TextInputEditText inputPassword;
     private ProgressBar progressLogin;
+    private LinearLayout layoutError;
     private TextView textError;
 
     @Override
@@ -39,9 +41,14 @@ public class LoginActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
         progressLogin = findViewById(R.id.progressLogin);
+        layoutError = findViewById(R.id.layoutError);
         textError = findViewById(R.id.textError);
-        MaterialButton btnLogin = findViewById(R.id.btnLogin);
+        android.widget.Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(v -> attemptLogin());
+
+        TextView textForgotPassword = findViewById(R.id.textForgotPassword);
+        textForgotPassword.setOnClickListener(v ->
+                Toast.makeText(this, "Funcionalidad próximamente disponible", Toast.LENGTH_SHORT).show());
     }
 
     private void attemptLogin() {
@@ -52,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
         progressLogin.setVisibility(View.VISIBLE);
-        textError.setVisibility(View.GONE);
+        layoutError.setVisibility(View.GONE);
 
         ApiClient.enqueue(
                 ApiClient.get().api().login(new LoginRequest(email, password)),
@@ -86,6 +93,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void showError(String msg) {
         textError.setText(msg);
-        textError.setVisibility(View.VISIBLE);
+        layoutError.setVisibility(View.VISIBLE);
     }
 }

@@ -6,4 +6,5 @@ public class ComentarioDto {
     public String autor;
     public String rol;
     public String fecha;
+    public Integer estrellas;
 }
